@@ -20,3 +20,11 @@ CUSTOMER'S ACCOUNT STATEMENT
 
 ADMIN DASHBOARD
 ![Dashboard -admin dashboard](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/30b748dc-cfc2-4c21-adb9-04d65416841d)
+
+MANAGE CUSTOMERS ACCOUNT SECTION
+![Dashboard - customers page](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/ffaee743-6b3f-4351-838e-f140fe49f9c8)
+
+ADMIN NOTIFICATION SECTION
+![Dashboard - admin notification page](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/52ab388a-30fa-43d4-85bf-27997bd937f4)
+
+etc
