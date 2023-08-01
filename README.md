@@ -14,3 +14,9 @@ CUSTOMER'S TRANSACTION HISTORY
 
 CUSTOMER'S TRANSFER SECTION
 ![Dashboard - transfer section](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/4cc21c63-4829-44fd-9b27-a7ef157180c4)
+
+CUSTOMER'S ACCOUNT STATEMENT
+![CHB-Dashboard - account statement](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/61800f2f-7d31-4962-8326-9cec25a36a77)
+
+ADMIN DASHBOARD
+![Dashboard -admin dashboard](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/30b748dc-cfc2-4c21-adb9-04d65416841d)
