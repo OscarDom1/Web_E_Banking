@@ -8,3 +8,9 @@ LANDING PAGE
 
 CUSTOMER'S DASHBOARD
 ![CHB-Dashboard - customers dashboard](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/3d5376c4-dfc6-458b-a1a6-e03dea53115c)
+
+CUSTOMER'S TRANSACTION HISTORY
+![CHB-Dashboard - customers transaction history](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/09059b50-6b20-436c-b83d-2cc691d18aec)
+
+CUSTOMER'S TRANSFER SECTION
+![Dashboard - transfer section](https://github.com/OscarDom1/Web_E_Banking/assets/111493495/4cc21c63-4829-44fd-9b27-a7ef157180c4)
