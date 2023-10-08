@@ -2,102 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OtpEmail;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Models\VerificationCode;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthOtpController extends Controller
 {
-    //return view of OTP login page
-
+    // Return view of OTP login page
     public function login()
     {
         return view('users.otp-login');
     }
 
-    //generate OTP
-    public function generate(Request $request)
+    // Generate and send OTP via email
+    public function generateOtpAndSendEmail(Request $request)
     {
-
-        //validate data
+        // Validate data
         $request->validate([
-            'phone_number' => 'required|exists:users,phone_number'
+            'email' => 'required|email|exists:users,email',
         ]);
 
-        //Generate an OTP
+        // Generate an OTP
+        $otp = $this->generateOtp();
 
-        $verificationCode = $this->generateOtp($request->phone_number);
+        // Get the user by email
+        $user = User::where('email', $request->email)->first();
 
-        //return with OTP
-        return redirect()->route('otp.verification', ['user_id' => $verificationCode->user_id])->with('message', "Your OTP to login is - " . $verificationCode->otp);
-
-
-        // $otp = mt_rand(100000, 999999); // Generate a 6-digit OTP
-        // $phoneNumber = $request->input('phone_number');
-    
-        // // Send OTP via Twilio SMS
-        // $twilio = new Client(config('app.twilio_sid'), config('app.twilio_auth_token'));
-        // $twilio->messages->create(
-        //     $phoneNumber,
-        //     [
-        //         'from' => config('app.twilio_phone_number'),
-        //         'body' => "Your OTP is: $otp",
-        //     ]
-        // );
-    
-        // // Store the generated OTP and the phone number in the session or database for verification
-        // // (Do not store OTPs in the database for security reasons)
-        // session(['otp' => $otp, 'phone_number' => $phoneNumber]);
-    
-        // return redirect()->back()->with('message', 'OTP sent successfully.');
-    }
-
-    public function generateOtp($phone_number)
-    {
-
-        $user = User::where('phone_number', $phone_number)->first();
-
-        //user does not have any existing otp
-        $verificationCode = VerificationCode::where('user_id', $user->id)->latest()->first();
-
-        $now = Carbon::now();
-
-        if ($verificationCode && $now->isBefore($verificationCode->expire_at)) {
-            return $verificationCode;
-        }
-
-        //create new otp
-
-        return VerificationCode::create([
+        // Save the OTP in the verification table
+        VerificationCode::create([
             'user_id' => $user->id,
-            'otp' => rand(123456, 999999),
-            'expire_at' => Carbon::now()->addMinutes(5)
+            'otp' => $otp,
+            'expire_at' => Carbon::now()->addMinutes(5), // Adjust the expiry time as needed
         ]);
+
+        // Send the OTP via email
+        Mail::to($user->email)->send(new OtpEmail($otp));
+
+        return redirect()->route('otp.verification', ['user_id' => $user->id]);
     }
 
+
+
+    // OTP Generation Logic
+    private function generateOtp()
+    {
+        return rand(100000, 999999);
+    }
+
+    // Show OTP verification form
     public function verification($user_id)
     {
-        //    dd();
         return view('users.otp-verification')->with([
-            'user_id' => $user_id
+            'user_id' => $user_id,
         ]);
     }
 
+    // Verify OTP and log in
     public function loginWithOtp(Request $request)
     {
-
-        # Validation
+        // Validation
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'otp' => 'required'
+            'otp' => 'required',
         ]);
 
-        # Validation Logic
-        $verificationCode = VerificationCode::where('user_id', $request->user_id)->where('otp', $request->otp)->first();
-
-        // dd('Successfully logged in!'); // Add this line for debugging
+        // Validation Logic
+        $verificationCode = VerificationCode::where('user_id', $request->user_id)
+            ->where('otp', $request->otp)
+            ->first();
 
         $now = Carbon::now();
         if (!$verificationCode) {
@@ -106,25 +82,18 @@ class AuthOtpController extends Controller
             return redirect()->route('otp.login')->with('message1', 'Your OTP has expired');
         }
 
-
-
         $user = User::whereId($request->user_id)->first();
 
         if ($user) {
             // Expire The OTP
             $verificationCode->update([
-                'expire_at' => Carbon::now()
+                'expire_at' => Carbon::now(),
             ]);
-
-
 
             Auth::login($user);
 
-
             return redirect('/dashboard/home');
         }
-
-        // dd('User not found!'); // Add this line for debugging
 
         return redirect()->route('otp.login')->with('message1', 'User not found');
     }

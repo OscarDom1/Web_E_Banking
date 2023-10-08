@@ -191,11 +191,11 @@ Route::get('/dashboard/payment-form', [PaymentController::class, 'showForm'])->n
 //bill payment route
 Route::post('/bill-payment', [PaymentController::class, 'payBill'])->name('bill.payment');
 
- // Route to show the fund transfer form
- Route::get('/dashboard/fund-transfer', [CustomerController::class, 'showForm'])->name('dashboard.fund-transfer');
-    
- // Route to process the fund transfer
- Route::post('/fund-transfer', [CustomerController::class, 'transferFunds'])->name('fund-transfer.transfer');
+// Route to show the fund transfer form
+Route::get('/dashboard/fund-transfer', [CustomerController::class, 'showForm'])->name('dashboard.fund-transfer');
+
+// Route to process the fund transfer
+Route::post('/fund-transfer', [CustomerController::class, 'transferFunds'])->name('fund-transfer.transfer');
 
 //route to card-request notice
 Route::get('/dashboard/card-request', function () {
@@ -218,11 +218,11 @@ Route::get('/dashboard/card-request', function () {
 //mobile generation otp
 Route::get('/otp/login', [AuthOtpController::class, 'login'])->name('otp.login');
 
-Route::post('/otp/generate', [AuthOtpController::class, 'generate'])->name('otp.generate');
+Route::post('/otp/generate', [AuthOtpController::class, 'generateOtpAndSendEmail'])->name('otp.generate');
 
 Route::get('/otp/verification/{user_id}', [AuthOtpController::class, 'verification'])->name('otp.verification');
 
-Route::post('/otp/login', [AuthOtpController::class, 'loginWithOtp'])->name('otp.getLogin');
+Route::post('/otp/login', [AuthOtpController::class, 'loginWithOtp'])->name('otp.verify');
 
 //pagination and filter route
 Route::get('/transaction', [TransactionController::class, 'index'])->name('dashboard.home');

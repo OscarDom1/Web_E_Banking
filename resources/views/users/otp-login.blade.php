@@ -32,31 +32,30 @@
     <div class="login-area ptb-100">
         <div class="container">
             <div class="login-form">
-                <h2>Mobile Number Verification</h2>
-                <p>Welcome Back, Enter your mobile number</p>
-                <form method="POST" action="{{ route('otp.generate')}}">
+                <h2>Email Verification</h2>
+                <p>Welcome back! Enter your email address.</p>
+                <form method="POST" action="{{ route('otp.generate') }}">
                     @csrf
                     <div class="form-group">
-                        <label>Mobile Number</label>
-                        <input type="text" name="phone_number" class="form-control" placeholder="+123...."
-                            value="{{ old('phone_number') }}" />
+                        <label>Email Address</label>
+                        <input type="email" name="email" class="form-control" placeholder="you@example.com"
+                            value="{{ old('email') }}" />
                         <br>
-                        @error('phone_number')
+                        @error('email')
                             <p class="error-msg">{{ $message }}</p>
                         @enderror
                         <br>
-
                     </div>
-                
                     <button type="submit" class="default-btn">Generate OTP</button>
                     <div class="account-text">
                         <span>Don’t have an account?
-                            <a href="/register">Create Account</a></span>
+                            <a href="{{route('register')}}">Create Account</a></span>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
 
     <div class="overview-area ptb-100">
         <div class="container">

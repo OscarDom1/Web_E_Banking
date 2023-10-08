@@ -32,33 +32,33 @@
     <div class="login-area ptb-100">
         <div class="container">
             <div class="login-form">
-                <h2>Mobile Number Verification</h2>
-                <p>Welcome Back, Enter your Otp</p>
-                <form method="POST" action="{{ route('otp.getLogin') }}">
+                <h2>Email OTP Verification</h2>
+                <p>Welcome Back, Enter your OTP sent to your email address</p>
+                <form method="POST" action="{{ route('otp.verify') }}">
                     @csrf
-
+    
+                    <!-- Hidden input for user_id -->
                     <input type="hidden" name="user_id" value="{{ $user_id }}">
+    
                     <div class="form-group">
-                        <label>One Time Password</label>
-                        <input type="text" name="otp" class="form-control" placeholder="Enter one time password"
-                            value="{{ old('otp') }}" />
+                        <label>One Time Password (OTP)</label>
+                        <input type="text" name="otp" class="form-control" placeholder="Enter OTP" value="{{ old('otp') }}" />
                         <br>
                         @error('otp')
                             <p class="error-msg">{{ $message }}</p>
                         @enderror
                         <br>
-
                     </div>
-                
-                    <button type="submit" class="default-btn">Login</button>
+    
+                    <button type="submit" class="default-btn">Verify OTP</button>
                     <div class="account-text">
-                        <span>Don’t have an account?
-                            <a href="/register">Create Account</a></span>
+                        <span>Don’t have an account? <a href="{{route('register')}}">Create Account</a></span>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
 
     <div class="overview-area ptb-100">
         <div class="container">

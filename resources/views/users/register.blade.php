@@ -129,7 +129,7 @@
                     </p>
                     <button type="submit" class="default-btn">Create Account</button>
                     <div class="account-text">
-                        <span>Already have an account? <a href="/login">Login</a></span>
+                        <span>Already have an account? <a href="{{route('login')}}">Login</a></span>
                     </div>
                 </form>
             </div>
